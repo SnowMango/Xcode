@@ -1,0 +1,9 @@
+存放文件语法判断Path: /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/DVTFoundation.xcplugindata 
+
+Xcode.SourceCodeLanguage.语法 //语法设置
+
+Xcode.FileDataType.识别文件类型断名  //文件类型判设置
+
+Xcode.MagicFileDataTypeDetector.识别文件类型断名 //根据内容 识别文件类型设置
+
+Xcode.FileDataTypeDetector.识别文件类型断名  //根据后缀 识别文件类型设置

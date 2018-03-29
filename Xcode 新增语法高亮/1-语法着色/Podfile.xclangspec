@@ -1,0 +1,553 @@
+// Podfile
+(
+
+/****************************************************************************/
+// MARK: Podfile keywords
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.podfile.identifier";
+        Syntax = {
+            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_[";
+            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_?[]";
+            Words = (
+                "BEGIN",
+                "END",
+                "__FILE__",
+                "__LINE__",
+                "alias",
+                "and",
+                "begin",
+                "break",
+                "case",
+                "class",
+                "def",
+                "defined?",
+                "do",
+                "else",
+                "elsif",
+                "end",
+                "ensure",
+                "false",
+                "for",
+                "if",
+                "in",
+                "module",
+                "next",
+                "nil",
+                "not",
+                "or",
+                "redo",
+                "rescue",
+                "retry",
+                "return",
+                "self",
+                "super",
+                "then",
+                "true",
+                "undef",
+                "unless",
+                "until",
+                "when",
+                "while",
+                "yield",
+                
+                "include",
+                "private",
+                "protected",
+                "public",
+                "raise",
+                "require",
+				"workspace",
+				"target",
+				"project",
+             );
+            Type = "xcode.syntax.keyword";
+            AltType = "xcode.syntax.identifier";    // non-keywords are identifiers
+        };
+    },
+
+
+/****************************************************************************/
+// MARK: Podfile Syntax Coloring
+/****************************************************************************/
+
+    {
+        Identifier = "xcode.lang.podfile";
+        Description = "Podfile Coloring";
+        BasedOn = "xcode.lang.simpleColoring";
+        IncludeInMenu = YES;
+        Name = "Podfile";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer.toplevel";
+            IncludeRules = (
+                "xcode.lang.podfile.module",
+                "xcode.lang.podfile.class",
+                "xcode.lang.podfile.function",
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+            Type = "xcode.syntax.plain";
+        };
+    },
+    {
+		// XML and HTML use this rule for embedded php
+        Identifier = "xcode.lang.podfile.inxml";
+        BasedOn = "xcode.lang.podfile";
+        Syntax = {
+            Start = "<%";
+            End = "%>";
+			Foldable = YES;
+            ParseEndBeforeIncludedRules = YES;
+            IncludeRules = (
+                "xcode.lang.podfile",
+            );
+            Type = "xcode.syntax.keyword";
+        };
+    },
+    {
+		// XML and HTML use this rule for embedded php
+        Identifier = "xcode.lang.podfile.inxml2";
+        BasedOn = "xcode.lang.podfile";
+        Syntax = {
+            Start = "<%%";
+            End = "%>";
+			Foldable = YES;
+            ParseEndBeforeIncludedRules = YES;
+            IncludeRules = (
+                "xcode.lang.podfile",
+            );
+            Type = "xcode.syntax.keyword";
+        };
+    },
+    
+    // The following rule returns tokens to the other rules
+    {
+        Identifier = "xcode.lang.podfile.lexer";
+        Syntax = {
+            IncludeRules = (
+                "xcode.lang.podfile.comment",
+                "xcode.lang.podfile.stringeval",
+                "xcode.lang.comment.singleline.pound",
+                "xcode.lang.string",
+                "xcode.lang.character",
+                "xcode.lang.podfile.identifier",
+                "xcode.lang.number",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.lexer.toplevel";
+        Syntax = {
+            IncludeRules = (
+                "xcode.lang.podfile.comment",
+                "xcode.lang.podfile.stringeval",
+                "xcode.lang.comment.singleline.pound",
+                "xcode.lang.string",
+                "xcode.lang.character",
+                "xcode.lang.podfile.module.declarator",
+                "xcode.lang.podfile.class.declarator",
+                "xcode.lang.podfile.function.declarator",
+                "xcode.lang.podfile.identifier",
+                "xcode.lang.number",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.module";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer.toplevel";
+            Start = "xcode.lang.podfile.module.declarator";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.class",
+                "xcode.lang.podfile.function",
+            );
+            Type = "xcode.syntax.definition.class";
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.module.declarator";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Rules = (
+                "module",
+                "xcode.lang.podfile.identifier",
+            );
+            Type = "xcode.syntax.name.partial";
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.class";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer.toplevel";
+            Start = "xcode.lang.podfile.class.declarator";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.function",
+            );
+            Type = "xcode.syntax.definition.class";
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.class.declarator";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Rules = (
+                "class",
+                "xcode.lang.podfile.identifier",
+                "xcode.lang.podfile.superclass?"
+            );
+            Type = "xcode.syntax.name.partial";
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.superclass";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Rules = (
+                "<",
+                "xcode.lang.podfile.identifier",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.function";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer.toplevel";
+            Start = "xcode.lang.podfile.function.declarator";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+            Type = "xcode.syntax.definition.function";
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.function.declarator";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Rules = (
+                "def",
+                "xcode.lang.podfile.function.name",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.function.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Rules = (
+                "xcode.lang.podfile.identifier",
+                "xcode.lang.podfile.function.name.more?",
+            );
+            Type = "xcode.syntax.name.partial";
+        };
+    },
+    {
+        Identifier = "xcode.lang.podfile.function.name.more";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Rules = (
+                ".",
+                "xcode.lang.podfile.identifier",
+            );
+            Type = "xcode.syntax.name.partial";
+        };
+    },
+    
+/****************************************************************************/
+// MARK: Podfile blocks
+/****************************************************************************/
+ {
+        Identifier = "xcode.lang.podfile.block";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "{";
+            End = "}";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.if";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "if";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            StartAtBOL = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.while";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "while";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            StartAtBOL = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.until";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "until";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            StartAtBOL = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.unless";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "unless";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            StartAtBOL = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.for";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "for";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            StartAtBOL = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.case";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "case";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            StartAtBOL = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.begin";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "begin";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.do",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.block.do";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "do";
+            End = "end";
+            Foldable = YES;
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.block",
+                "xcode.lang.podfile.block.if",
+                "xcode.lang.podfile.block.while",
+                "xcode.lang.podfile.block.until",
+                "xcode.lang.podfile.block.unless",
+                "xcode.lang.podfile.block.for",
+                "xcode.lang.podfile.block.case",
+                "xcode.lang.podfile.block.begin",
+                "xcode.lang.podfile.bracketexpr",
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.parenexpr";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "(";
+            End = ")";
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.bracketexpr",
+            );
+        };
+    },
+    {
+        Identifier = "xcode.lang.podfile.bracketexpr";
+        Syntax = {
+            Tokenizer = "xcode.lang.podfile.lexer";
+            Start = "[";
+            End = "]";
+            Recursive = YES;
+            IncludeRules = (
+                "xcode.lang.podfile.parenexpr",
+            );
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.podfile.stringeval";
+        Syntax = {
+            Start = "#{";
+            End = "}";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.podfile.comment";
+        Syntax = {
+            Start = "=begin";
+            End = "=end";
+            Foldable = YES;
+            IncludeRules = ( "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
+            Type = "xcode.syntax.comment";
+        };
+    },
+)
+
