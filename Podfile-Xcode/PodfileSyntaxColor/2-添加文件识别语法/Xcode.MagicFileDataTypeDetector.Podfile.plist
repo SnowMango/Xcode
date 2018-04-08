@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Xcode.MagicFileDataTypeDetector.Podfile</key>
+	<dict>
+		<key>detectedTypeIdentifier</key>
+		<string>public.plain-text</string>
+		<key>id</key>
+		<string>Xcode.MagicFileDataTypeDetector.Podfile</string>
+		<key>magicWordString</key>
+		<array>
+			<dict>
+				<key>string</key>
+				<string>#!/usr/local/bin/pod</string>
+			</dict>
+			<dict>
+				<key>string</key>
+				<string>#!podfile</string>
+			</dict>
+		</array>
+		<key>name</key>
+		<string>Podfile Magic File Data Type Detector</string>
+		<key>point</key>
+		<string>Xcode.MagicFileDataTypeDetector</string>
+		<key>version</key>
+		<string>0.1</string>
+	</dict>
+</dict>
+</plist>

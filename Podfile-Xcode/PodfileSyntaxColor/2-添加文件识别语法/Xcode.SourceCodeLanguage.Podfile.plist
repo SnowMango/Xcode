@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Xcode.SourceCodeLanguage.Podfile</key>
+	<dict>
+		<key>commentSyntax</key>
+		<array>
+			<dict>
+				<key>prefix</key>
+				<string>#</string>
+			</dict>
+		</array>
+		<key>fileDataType</key>
+		<array>
+			<dict>
+				<key>identifier</key>
+				<string>public.plain-text</string>
+			</dict>
+		</array>
+		<key>name</key>
+		<string>Podfile Ruby Language</string>
+		<key>id</key>
+		<string>Xcode.SourceCodeLanguage.Podfile</string>
+		<key>point</key>
+		<string>Xcode.SourceCodeLanguage</string>
+		<key>languageName</key>
+		<string>Podfile</string>
+		<key>version</key>
+		<string>1.0</string>
+		<key>conformsTo</key>
+		<array>
+			<dict>
+				<key>identifier</key>
+				<string>Xcode.SourceCodeLanguage.Generic</string>
+			</dict>
+		</array>
+		<key>languageSpecification</key>
+		<string>xcode.lang.podfile</string>
+	</dict>
+</dict>
+</plist>
