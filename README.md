@@ -2,4 +2,4 @@
 
 - [x] Finish my changes
 - [ ] Push my commits to GitHub
-- [ ] \(x) Open a followup issue
+- [ ] \(disabled = "NO") Open a followup issue
