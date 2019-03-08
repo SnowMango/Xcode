@@ -151,9 +151,9 @@ GitHub Flavored Markdown
 
 ### Automatic linking for URLs
 
-http://www.github.com/
-<http://www.github.com/>
-@郑丰<164804868@qq.com>
+http://www.github.com/  
+<http://www.github.com/>  
+@郑丰:164804868@qq.com
 
 ### Strikethrough
 
