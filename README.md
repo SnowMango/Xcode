@@ -151,11 +151,11 @@ GitHub Flavored Markdown
 
 ### Automatic linking for URLs
 
-* \http://www.github.com/  
-  \164804868@qq.com
+* http://www.github.com/  
+  164804868@qq.com
 
-* \<http://www.github.com/>  
-  \<164804868@qq.com>
+* <http://www.github.com>  
+  <164804868@qq.com>
 
 ### Strikethrough
 
