@@ -1,171 +1,117 @@
 # Xcode
 
-Markdown Example
-=======
+ComaiotUI 说明
+============
 
-Base
------
+### 导入 ComaiotUI
 
-### 1 Special Characters 特殊字符
+使用pod path 导入 ComaiotUI.podspec
 
-* `&lt;`  = &lt;
-
-* `&amp;`  =  &amp;
-
-* `&copy;`  = &copy;
-
-### 2 Phrase Emphasis 强调
-
-+ *italic*   
-+ **bold**  
-+ _italic_  
-+ __bold__
-
-### 3 Links 链接
-
-* An [example](https://spec.commonmark.org "Title")
-
-* An [example][id]. Then, anywhere else in the doc, define the link: 
-
-  [id]: https://spec.commonmark.org  "Title"
-
-### 4 Images 图片
-
-* ![alt text](http://img4.duitang.com/uploads/item/201508/19/20150819131018_vYPyR.thumb.224_0.png "Title")
-
-* ![alt text][img]  
-
-   [img]: http://img4.duitang.com/uploads/item/201508/19/20150819131018_vYPyR.thumb.224_0.png "Title"
-
-### 5 Headers  标题
-
-* setext headings.
-
-This is an H1
-===========
-
-This is an H2
--------------
-
-* Atx-style headers use 1-6 hash characters at the start of the line, corresponding to header levels 1-6.
-
-# This is an H1
-
-## This is an H2
-
-###### This is an H6
-    
-### 6 Lists 列表
-
-1. Number  
-    1.  Foo  
-    2.  Bar
-
-2. \* \+ \- Charaters  
-    * Abacus  
-    + answer  
-    - Bubbles
-
-### 7 Blockquotes 块引用
-
-> Email-style angle brackets
-> are used for blockquotes.
-
-> > And, they can be nested.
-
-> ### Headers in blockquotes
-> 
-> * You can quote a list.
-> * Etc.
-
-### 8 Code  Spans 行内代码
-
-* `code`  spans are delimited by backticks.
-
-* ``` codde```  spans are delimited by backticks.
-
-### 9 Preformatted Code  代码区块
-
-indent every line of a code block by at least 4 spaces or 1 tab.
-
-This is a normal paragraph.
-
-    This is a preformatted code block.
-
-### 10 Horizontal 分隔线
-
-*  \--- ,\***  ,\- - -
-
----   
-***  
-- - -
-
-### 11 Manual Line 换行
-
-End a line with two or more spaces
-
-Roses are red,   
-Violets are blue.
-
-Markdown Common
------
-
-###  Lists Extra
-
-* add ) Charaters
-1)  Foo  
-1)  Foo  
-
-### Preformatted Code Extra
-
- ```
-  hello world
-  spans are delimited by backticks.
-```  
-
-GitHub Flavored Markdown
------
-
-### Syntax highlighting 语法高亮
-
-```javascript
-    function fancyAlert(arg) {
-      if(arg) {
-        $.facebox({div:'#foo'})
-      }
-    }
+```ruby
+pod 'ComaiotUI', :path => '../ComaiotUI'
 ```
-### Task Lists  任务列表
+>  关于 [CocoaMQTT](http://www.emqtt.com/clients#Objective-C)  [github](https://github.com/emqtt/CocoaMQTT)
+> 
+> CocoaMQTT的1.1.3版本，官方未提供支持OC 请自己手动 或 使用pod （` pod 'ComaiotUI/CocoaMQTT', :path => '../ComaiotUI'`）, CocoaMQTTSource目录下 有修改后的源文件
+>
+>声网 AgoraRtcEngine_iOS 可以自己导入或者 `pod 'ComaiotUI/AgoraRtcEngine_iOS'`
 
-- [x] Finish my changes
-- [ ] Push my commits to GitHub
-- [ ] \(Optional) Open a followup issue
 
-### Tables 表格
+### 关于ComaiotSDK 
 
-| Left-Aligned | Center Aligned | Right Aligned |  
-| :------------ |:---------------:| -----:|
-| col 3 is | some wordy text | $1600 |  
-| col 2 is | centered | $12 |   
-| zebra stripes | are neat | $1 |  
+> App和设备通信使用mqtt服务，App对设备属于单向通信,设备对App属于单向通信.
+>
+>设备接收到App发送的命令 会以同样的命令 回复App 但是在逻辑上不属于同一条消息
 
-### Automatic linking for URLs
+1. App to 设备：
 
-* http://www.github.com/  
-  164804868@qq.com
+    * 查询在线状态 `CSMessageStatusCMD`
+ 
+    * 查询设备设置 `CSMessageConfigGetCMD`
 
-* <http://www.github.com>  
-  <164804868@qq.com>
+    * 修改设备设置 `CSMessageConfigSetCMD`
 
-### Strikethrough
+    * 重启设备 `CSMessageResetCMD`
 
- ~~This was mistaken text~~
+    * 升级设备 `CSMessageUpgradeCMD`
 
-### Emoji
+    * 操作设备  `CSMessageControlCMD` 控制类型  control_type   0/1/2/3      拍照/录像/关闭紧急通话/上传日志
 
-* :EMOJICODE: [emoji-cheat-sheet](http://emoji-cheat-sheet.com/)
+    * 远程视频 `CSMessageGetVideoCMD`
 
-:blush:
-:joy:
-:grinning:
+    * 取消设备分享 `CSMessageRemoveShareCMD`
+
+```objective-c
+CSMessage *msg = [CSMessage setConfig];
+//msg.cmd =CSMessageConfigSetCMD
+msg.content[@"deviceNickName"] = name;
+[[CSApiManager shareInstance] sendMsg:msg toDevice:self.showDevice];
+
+CSMessage *msg = [CSMessage controlDev];
+//msg.cmd = CSMessageControlCMD
+msg.content[@"control_type"]= @"3";
+[[CSApiManager shareInstance] sendMsg:msg toDevice:self.showDevice];
+
+```
+
+2. 设备 to App：
+    * 设备设置更新 `CSMessageSetChangeNotice`
+    * 设备远程视频 `CSMessageRemoteVideoNotice`
+    * 设备紧急电话呼叫 `CSMessageCallAlertNotice`
+    * 设备开启省电模式 `CSMessageSavingModeNotice`
+    * 设备进入声网 `CSMessageJoinAgoraNotice`
+    * 设备挂断 `CSMessageCloseRemoteNotice`
+    * 分享设备被取消 `CSMessageShareRemoveNotice`
+    
+3. CSDeviceUpdateNotifacation 设备被删除和获取设备列表通知
+
+4. CSDeviceNoticeNotifacation 接收到设备的Notice消息通知 
+
+### Comaiot 流程
+
+1. 使用`jwt` 登录控慧后台后 进入设备界面`CUIDeviceController`
+
+2. 获取设备列表 ，接收设备更新通知`CSDeviceUpdateNotifacation` 
+
+```objective-c
+[[CSApiManager shareInstance] getDeviceList:^(NSArray<CSDevice *> *devices, NSError *error) {
+
+}];
+```
+
+3. 收到设备跟新通知后 `CSMsgCenterDidAddDeviceNotification`
+
+4. 设备添加完成即可和设备通信，设备不在线的情况下 发送消息 不会有回复
+
+``` objective-c
+//查询设备在线 
+[dev updateStatusFromDev]; 
+/*
+等同于
+CSMessage *msg = [CSMessage queryStatus];
+[[CSApiManager shareInstance] sendMsg:msg toDevice:dev];
+*/
+//查询设备配置
+[dev updateConfigFromDev];
+/*
+等同于
+CSMessage *msg = [CSMessage queryConfig];
+[[CSApiManager shareInstance] sendMsg:msg toDevice:dev];
+*/
+
+```
+ 
+4. 设备添加流程 具体使用请查看CSApiManager 设备绑定相关的Api
+
+    1. 获取添加AID
+    2. 获取绑定二维码字段，生成二维码，然后使用设备扫描二维码
+    3. 查询设备是否绑定成功
+    
+5. 配网
+    
+    1. 获取配网 code
+    2. App连接设备广播的WIFI中 
+    3. 发送 code 给设备
+
+
 
