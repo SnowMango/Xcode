@@ -25,21 +25,21 @@ pod 'ComaiotUI', :path => '../ComaiotUI'
 
 1. App to 设备：
 
-    * 查询在线状态 `CSMessageStatusCMD`
+  * 查询在线状态 `CSMessageStatusCMD`
  
-    * 查询设备设置 `CSMessageConfigGetCMD`
+  * 查询设备设置 `CSMessageConfigGetCMD`
 
-    * 修改设备设置 `CSMessageConfigSetCMD`
+  * 修改设备设置 `CSMessageConfigSetCMD`
 
-    * 重启设备 `CSMessageResetCMD`
+  * 重启设备 `CSMessageResetCMD`
 
-    * 升级设备 `CSMessageUpgradeCMD`
+  * 升级设备 `CSMessageUpgradeCMD`
 
-    * 操作设备  `CSMessageControlCMD` 控制类型  control_type   0/1/2/3      拍照/录像/关闭紧急通话/上传日志
+  * 操作设备  `CSMessageControlCMD` 控制类型  control_type   0/1/2/3      拍照/录像/关闭紧急通话/上传日志
 
-    * 远程视频 `CSMessageGetVideoCMD`
+  * 远程视频 `CSMessageGetVideoCMD`
 
-    * 取消设备分享 `CSMessageRemoveShareCMD`
+  * 取消设备分享 `CSMessageRemoveShareCMD`
 
 ```objective-c
 CSMessage *msg = [CSMessage setConfig];
@@ -55,13 +55,13 @@ msg.content[@"control_type"]= @"3";
 ```
 
 2. 设备 to App：
-    * 设备设置更新 `CSMessageSetChangeNotice`
-    * 设备远程视频 `CSMessageRemoteVideoNotice`
-    * 设备紧急电话呼叫 `CSMessageCallAlertNotice`
-    * 设备开启省电模式 `CSMessageSavingModeNotice`
-    * 设备进入声网 `CSMessageJoinAgoraNotice`
-    * 设备挂断 `CSMessageCloseRemoteNotice`
-    * 分享设备被取消 `CSMessageShareRemoveNotice`
+  * 设备设置更新 `CSMessageSetChangeNotice`
+  * 设备远程视频 `CSMessageRemoteVideoNotice`
+  * 设备紧急电话呼叫 `CSMessageCallAlertNotice`
+  * 设备开启省电模式 `CSMessageSavingModeNotice`
+  * 设备进入声网 `CSMessageJoinAgoraNotice`
+  * 设备挂断 `CSMessageCloseRemoteNotice`
+  * 分享设备被取消 `CSMessageShareRemoveNotice`
     
 3. CSDeviceUpdateNotifacation 设备被删除和获取设备列表通知
 
